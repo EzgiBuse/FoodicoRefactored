@@ -1,0 +1,115 @@
+﻿
+@model List<ProductDto>
+
+@{
+    ViewData["Title"] = "Shop";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zxx">
+
+@Html.Partial("_HeadPartialView")
+
+<body>
+    
+
+    <!-- Offcanvas Menu Begin -->
+    @Html.Partial("_OffCanvasPartialView")
+    <!-- Offcanvas Menu End -->
+    <!-- Header Section Begin -->
+    @Html.Partial("_HeaderPartialView")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var message = '@TempData["NotificationMessage"]';
+            var type = '@TempData["NotificationType"]';
+            toastr[type](message);
+        });
+    </script>
+    <!-- Header Section End -->
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="breadcrumb__text">
+                        <h2>Shop</h2>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Shop Section Begin -->
+    
+    <section class="shop spad" style="padding-bottom: 0px;">
+        <div class="container">
+            <div class="shop__option">
+                <form asp-action="FilterAndSort" method="get" class="row" id="filterAndSortForm">
+                    <div class="col-lg-7 col-md-7">
+                        <div class="shop__option__search">
+                            <input type="text" placeholder="Search" id="searchString" name="searchString" value="@ViewData["CurrentFilter"]" />
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="shop__option__right">
+                            <select id="sortOrder" name="sortOrder" onchange="document.getElementById('filterAndSortForm').submit();">
+                                <option value="">Default sorting</option>
+                                <option value="name_asc">Name (A-Z)</option>
+                                <option value="name_desc">Name (Z-A)</option>
+                                <option value="price_asc">Price (Low to High)</option>
+                                <option value="price_desc">Price (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+            <!-- Shop Section Begin -->
+    <section class="shop spad" style="padding-top: 0px;">
+                <div class="container">
+                    @for (int i = 0; i < Model.Count; i += 3)
+                    {
+                        <div class="row">
+                            @for (int j = i; j < i + 3 && j < Model.Count; j++)
+                            {
+                               
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="product__item">
+                                <a href="@Url.Action("ProductDetails", "Shop", new { id = Model[j].ProductId })">
+                                        <div class="product__item__pic set-bg" data-setbg="@Model[j].ImageUrl">
+                                            <div class="product__label">
+                                                <span>@Model[j].CategoryName</span>
+                                            </div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <h6><a href="#">@Model[j].Name</a></h6>
+                                            <h6><a href="#">$@Model[j].Price.ToString("0.00")</a></h6>
+                                          
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </section>
+    <!-- Footer Section Begin -->
+   @Html.Partial("_FooterPartialView")
+    <!-- Footer Section End -->
+    <!-- Search Begin -->
+    
+    <!-- Search End -->
+    <!-- Js Plugins -->
+    @Html.Partial("_ScriptsPartialView")
+</body>
+
+</html>

@@ -1,0 +1,462 @@
+﻿@model List<ProductDto>
+@{
+     ViewData["Title"] = "Home Page"; 
+     Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<!-- _HeadPartial Begin -->
+@Html.Partial("_HeadPartialView")
+
+   
+<!-- _HeadPartial End -->
+<body>
+    <!-- Offcanvas Menu Begin -->
+    @Html.Partial("_OffCanvasPartialView")
+    <!-- Offcanvas Menu End -->
+    <!-- Header Section Begin -->
+    
+    @Html.Partial("_HeaderPartialView")
+    <!-- Header Section End -->
+    <!-- Hero Section Begin -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var message = '@TempData["NotificationMessage"]';
+            var type = '@TempData["NotificationType"]';
+            toastr[type](message);
+        });
+    </script>
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item set-bg" data-setbg="/cake-main/img/hero/hero-1.jpg">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="hero__text">
+                                <h2>Bringing happiness to your doorstep, one delectable bite at a time!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__item set-bg" data-setbg="/cake-main/img/hero/hero-1.jpg">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="hero__text">
+                                <h2>Making your life sweeter one bite at a time!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+    <!-- About Section Begin -->
+    <section class="about spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="about__text">
+                        <div class="section-title">
+                            <span>About Our Bakery</span>
+                            <h2>Cakes and bakes from the house of Queens!</h2>
+                        </div>
+                        <p>
+                            Our bakery employs a dedicated team of twelve bakers, pastry chefs, and sales associates. 
+                            Each morning, they rise before dawn to craft artisanal breads, delicate pastries
+                            and decadent cakes from scratch, infusing the neighborhood with the irresistible
+                            aroma of freshly baked goods. With a commitment to quality ingredients and traditional
+                            techniques, the bakery warmly welcomes patrons to savor the fruits of their labor, 
+                            fostering a sense of community one delectable treat at a time.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="about__bar">
+                        <div class="about__bar__item">
+                            <p>Cake design</p>
+                            <div id="bar1" class="barfiller">
+                                <div class="tipWrap"><span class="tip"></span></div>
+                                <span class="fill" data-percentage="95"></span>
+                            </div>
+                        </div>
+                        <div class="about__bar__item">
+                            <p>Cake Class</p>
+                            <div id="bar2" class="barfiller">
+                                <div class="tipWrap"><span class="tip"></span></div>
+                                <span class="fill" data-percentage="80"></span>
+                            </div>
+                        </div>
+                        <div class="about__bar__item">
+                            <p>Cake Recipes</p>
+                            <div id="bar3" class="barfiller">
+                                <div class="tipWrap"><span class="tip"></span></div>
+                                <span class="fill" data-percentage="90"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+    <!-- Categories Section Begin -->
+    <div class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    <div class="categories__item">
+                        <div class="categories__item__icon">
+                            <span class="flaticon-029-cupcake-3"></span>
+                            <h5>Cupcake</h5>
+                        </div>
+                    </div>
+                    <div class="categories__item">
+                        <div class="categories__item__icon">
+                            <span class="flaticon-005-pancake"></span>
+                            <h5>Pancake</h5>
+                        </div>
+                    </div>
+                    <div class="categories__item">
+                        <div class="categories__item__icon">
+                            <span class="flaticon-030-cupcake-2"></span>
+                            <h5>Ice Cream</h5>
+                        </div>
+                    </div>
+                    <div class="categories__item">
+                        <div class="categories__item__icon">
+                            <span class="flaticon-034-chocolate-roll"></span>
+                            <h5>Cake</h5>
+                        </div>
+                    </div>
+                    <div class="categories__item">
+                        <div class="categories__item__icon">
+                            <span class="flaticon-006-macarons"></span>
+                            <h5>Macaron</h5>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Categories Section End -->
+    
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            @for (int i = 0; i < 9; i += 4)
+            {
+                <div class="row">
+                    @for (int j = i; j < i + 3 && j < Model.Count; j++)
+                    {
+                        var product = Model[j];
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <a href="@Url.Action("ProductDetails", "Shop", new { id = @Model[j].ProductId })">
+                                <div class="product__item__pic set-bg" data-setbg="@Model[j].ImageUrl">
+                                    <div class="product__label">
+                                        <span>@Model[j].CategoryName</span>
+                                    </div>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="#">@Model[j].Name</a></h6>
+                                        <h6><a href="#">$@Model[j].Price.ToString("0.00")</a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+   
+    <!-- Team Section Begin -->
+    <section class="team spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7">
+                    <div class="section-title">
+                        <span>Behind The Bakery</span>
+                        <h2>Discover Our Team</h2>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="team__item set-bg" data-setbg="/cake-main/img/team/team-1.jpg">
+                        <div class="team__item__text">
+                            <h6>David Patel</h6>
+                            <span>Pastry Chef</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="team__item set-bg" data-setbg="/cake-main/img/team/team-2.jpg">
+                        <div class="team__item__text">
+                            <h6>Emily Johnson</h6>
+                            <span>Cake Decorator</span>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="team__item set-bg" data-setbg="/cake-main/img/team/team-3.jpg">
+                        <div class="team__item__text">
+                            <h6>John Rodriguez</h6>
+                            <span>Pastry Sous Chef</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="team__item set-bg" data-setbg="/cake-main/img/team/team-4.jpg">
+                        <div class="team__item__text">
+                            <h6>Michael Nguyen</h6>
+                            <span>Bakery Manager</span>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team Section End -->
+    <!-- Testimonial Section Begin -->
+    <section class="testimonial spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <span>Testimonial</span>
+                        <h2>Our Client Say</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="testimonial__slider owl-carousel">
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-1.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Sarah Smith</h5>
+                                    <span>New york</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "The bakery exceeded my expectations! The croissants were buttery and flaky, 
+                                and the custom cake I ordered for my son's birthday was not only visually 
+                                stunning but also incredibly delicious."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-2.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Jennifer Brown</h5>
+                                    <span>Berlin</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "What a gem of a bakery! From the friendly staff to the wide array of pastries,
+                                everything was top-notch. I will recommend this place to all of my friends and
+                                will definitely visit again."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-1.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Anna Garcia</h5>
+                                    <span>London</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "As a pastry connoisseur, I have high standards, and this bakery met them all.
+                                The eclairs were a highlight - perfectly balanced flavors and a delicate texture.
+                                I Highly recommend!"
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-2.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Emma Davis</h5>
+                                    <span>Munich</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "The bakery's selection of vegan treats was impressive, and I appreciated
+                                the creativity in their recipes. The vegan chocolate cake I tried was rich
+                                and indulgent. I will try the Pancakes next time."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-1.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Ophelia Nunez</h5>
+                                    <span>Berlin</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "The bakery's artisanal breads were exceptional, with a crusty exterior and a soft,
+                                flavorful interior. The ambience was cozy, making it the perfect spot for a leisurely brunch."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="testimonial__item">
+                            <div class="testimonial__author">
+                                <div class="testimonial__author__pic">
+                                    <img src="/cake-main/img/testimonial/ta-2.jpg" alt="">
+                                </div>
+                                <div class="testimonial__author__text">
+                                    <h5>Ava Wilson</h5>
+                                    <span>Amsterdam</span>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star"></span>
+                                <span class="icon_star-half_alt"></span>
+                            </div>
+                            <p>
+                                "I was blown away by the attention to detail in every pastry I tried. The raspberry tart was a standout,
+                                with a perfect balance of sweetness and tartness. Definitely a must-visit for any pastry lover!"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial Section End -->
+    <!-- Instagram Section Begin -->
+    <section class="instagram spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 p-0">
+                    <div class="instagram__text">
+                        <div class="section-title">
+                            <span>Follow us on instagram</span>
+                            <h2>Sweet moments are saved as memories.</h2>
+                        </div>
+                        <!--   <h5><i class="fa fa-instagram"></i> sweetcake</h5>-->
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic">
+                                <img src="/cake-main/img/instagram/instagram-1.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic middle__pic">
+                                <img src="/cake-main/img/instagram/instagram-2.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic">
+                                <img src="/cake-main/img/instagram/instagram-3.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic">
+                                <img src="/cake-main/img/instagram/instagram-4.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic middle__pic">
+                                <img src="/cake-main/img/instagram/instagram-5.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                            <div class="instagram__pic">
+                                <img src="/cake-main/img/instagram/instagram-7.png" alt="">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Instagram Section End -->
+    <!-- Map Begin -->
+    @Html.Partial("_MapPartialView")
+    <!-- Map End -->
+    <!-- Footer Section Begin -->
+    @Html.Partial("_FooterPartialView")
+    <!-- Footer Section End -->
+    
+    <!-- Search End -->
+    <!-- Js Plugins -->
+    @Html.Partial("_ScriptsPartialView")
+   
+</body>
+
+</html>
